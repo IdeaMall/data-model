@@ -1,0 +1,57 @@
+{
+    "name": "@ideamall/data-model",
+    "version": "0.7.0",
+    "license": "LGPL-2.1",
+    "author": "shiy2008@gmail.com",
+    "description": "IdeaMall data model is based on TypeScript class validator",
+    "keywords": [
+        "mall",
+        "shop",
+        "store",
+        "market",
+        "data-model",
+        "class"
+    ],
+    "homepage": "https://ideamall.github.com/data-model/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IdeaMall/data-model.git"
+    },
+    "bugs": {
+        "url": "https://github.com/IdeaMall/data-model/issues"
+    },
+    "source": "src/index.ts",
+    "types": "dist/index.d.ts",
+    "main": "dist/index.js",
+    "dependencies": {
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "reflect-metadata": "^0.1.13",
+        "tslib": "^2.5.0"
+    },
+    "devDependencies": {
+        "husky": "^8.0.3",
+        "lint-staged": "^13.1.0",
+        "open-cli": "^7.1.0",
+        "prettier": "^2.8.3",
+        "typedoc": "^0.23.24",
+        "typedoc-plugin-mdn-links": "^2.0.2",
+        "typescript": "^4.9.5"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "trailingComma": "none",
+        "arrowParens": "avoid",
+        "singleQuote": true
+    },
+    "lint-staged": {
+        "*.{md,json,yml,ts}": "prettier --write"
+    },
+    "scripts": {
+        "prepare": "husky install",
+        "test": "lint-staged",
+        "build": "rm -rf dist/ docs/  &&  tsc  &&  typedoc src/",
+        "start": "npm run build  &&  open-cli docs/index.html",
+        "prepublishOnly": "npm test  &&  npm run build"
+    }
+}
