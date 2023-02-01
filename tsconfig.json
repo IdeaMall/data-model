@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "experimentalDecorators": true,
+        "declaration": true,
+        "importHelpers": true,
+        "lib": ["ES2022"],
+        "outDir": "dist"
+    },
+    "include": ["src/**/*"],
+    "typedocOptions": {
+        "name": "IdeaMall data model",
+        "excludeExternals": true,
+        "excludePrivate": true,
+        "readme": "./ReadMe.md",
+        "out": "docs/"
+    }
+}
