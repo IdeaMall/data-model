@@ -1,6 +1,6 @@
 {
     "name": "@ideamall/data-model",
-    "version": "0.8.3",
+    "version": "0.8.4",
     "license": "LGPL-2.1",
     "author": "shiy2008@gmail.com",
     "description": "IdeaMall data model is based on TypeScript class validator",

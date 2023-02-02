@@ -1,14 +1,13 @@
-import { Type } from 'class-transformer';
-import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsInt, IsOptional, IsString, Min } from 'class-validator';
 
-import { BaseModel } from './User';
+import { UserBaseModel } from './User';
 
-export class CategoryModel extends BaseModel {
+export class CategoryModel extends UserBaseModel {
     @IsString()
     name: string;
 
-    @Type(() => CategoryModel)
-    @ValidateNested()
+    @IsInt()
+    @Min(1)
     @IsOptional()
-    parent?: CategoryModel;
+    parentId?: number;
 }

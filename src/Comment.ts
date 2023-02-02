@@ -6,10 +6,10 @@ import {
     ValidateNested
 } from 'class-validator';
 
-import { BaseModel } from './User';
 import { GoodsModel } from './Goods';
+import { UserBaseModel } from './User';
 
-export class CommentModel extends BaseModel {
+export class CommentModel extends UserBaseModel {
     @Type(() => GoodsModel)
     @ValidateNested()
     goods: GoodsModel;

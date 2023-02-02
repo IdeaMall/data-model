@@ -1,8 +1,8 @@
 import { IsOptional, IsString } from 'class-validator';
 
-import { BaseModel } from './User';
+import { UserBaseModel } from './User';
 
-export class AddressModel extends BaseModel {
+export class AddressModel extends UserBaseModel {
     @IsString()
     country: string;
 

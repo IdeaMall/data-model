@@ -1,42 +1,19 @@
 import { Type } from 'class-transformer';
 import {
-    IsDate,
     IsEnum,
-    IsInt,
     IsOptional,
     IsPhoneNumber,
     IsString,
     IsUrl,
-    Min,
     ValidateNested
 } from 'class-validator';
+
+import { BaseModel } from './Base';
 
 export enum Gender {
     Female,
     Male,
     Other
-}
-
-export abstract class BaseModel {
-    @IsInt()
-    @Min(1)
-    id: number;
-
-    @IsDate()
-    createdAt: Date;
-
-    @Type(() => UserModel)
-    @ValidateNested()
-    createdBy: UserModel;
-
-    @IsDate()
-    @IsOptional()
-    updatedAt?: Date;
-
-    @Type(() => UserModel)
-    @ValidateNested()
-    @IsOptional()
-    updatedBy?: UserModel;
 }
 
 export class UserModel extends BaseModel {
@@ -62,4 +39,15 @@ export class UserModel extends BaseModel {
     @IsString()
     @IsOptional()
     token?: string;
+}
+
+export abstract class UserBaseModel extends BaseModel {
+    @Type(() => UserModel)
+    @ValidateNested()
+    createdBy: UserModel;
+
+    @Type(() => UserModel)
+    @ValidateNested()
+    @IsOptional()
+    updatedBy?: UserModel;
 }
