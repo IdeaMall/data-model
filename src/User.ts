@@ -1,4 +1,10 @@
-import { IsEnum, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import {
+    IsEnum,
+    IsOptional,
+    IsPhoneNumber,
+    IsString,
+    IsUrl
+} from 'class-validator';
 
 import { BaseModel } from './Base';
 
@@ -17,5 +23,18 @@ export class UserModel extends BaseModel {
     nickName?: string;
 
     @IsEnum(Gender)
-    gender: Gender;
+    @IsOptional()
+    gender?: Gender;
+
+    @IsUrl()
+    @IsOptional()
+    avatar?: string;
+
+    @IsString()
+    @IsOptional()
+    password?: string;
+
+    @IsString()
+    @IsOptional()
+    token?: string;
 }

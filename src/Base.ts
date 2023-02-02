@@ -1,10 +1,17 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsInt, IsOptional, ValidateNested } from 'class-validator';
+import {
+    IsDate,
+    IsInt,
+    IsOptional,
+    Min,
+    ValidateNested
+} from 'class-validator';
 
 import { UserModel } from './User';
 
 export abstract class BaseModel {
     @IsInt()
+    @Min(1)
     id: number;
 
     @IsDate()
