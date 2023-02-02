@@ -17,7 +17,7 @@ export class OrderModel extends BaseModel {
     goods: GoodsModel;
 
     @IsNumber()
-    amount: number;
+    price: number;
 
     @IsString()
     @IsOptional()
