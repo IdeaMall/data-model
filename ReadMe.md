@@ -6,7 +6,7 @@ IdeaMall data model is based on [TypeScript][1] [class validator][2]
 
 ## API Document
 
-https://ideamall.github.com/data-model/
+https://ideamall.github.io/data-model/
 
 ## Usage
 

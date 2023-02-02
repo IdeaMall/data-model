@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 
-export * from './Base';
 export * from './User';
 export * from './Address';
 export * from './Category';

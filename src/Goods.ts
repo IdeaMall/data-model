@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsNumber, IsString, IsUrl, ValidateNested } from 'class-validator';
 
-import { BaseModel } from './Base';
+import { BaseModel } from './User';
 import { CategoryModel } from './Category';
 
 export class GoodsModel extends BaseModel {

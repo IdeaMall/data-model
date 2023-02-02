@@ -1,6 +1,6 @@
 import { IsOptional, IsString } from 'class-validator';
 
-import { BaseModel } from './Base';
+import { BaseModel } from './User';
 
 export class AddressModel extends BaseModel {
     @IsString()

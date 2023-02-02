@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsEnum, ValidateNested } from 'class-validator';
 
-import { BaseModel } from './Base';
+import { BaseModel } from './User';
 import { GoodsModel } from './Goods';
 
 export enum FavoriteType {

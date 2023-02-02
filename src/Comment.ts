@@ -6,7 +6,7 @@ import {
     ValidateNested
 } from 'class-validator';
 
-import { BaseModel } from './Base';
+import { BaseModel } from './User';
 import { GoodsModel } from './Goods';
 
 export class CommentModel extends BaseModel {

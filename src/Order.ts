@@ -7,9 +7,8 @@ import {
     ValidateNested
 } from 'class-validator';
 
-import { BaseModel } from './Base';
 import { GoodsModel } from './Goods';
-import { UserModel } from './User';
+import { BaseModel, UserModel } from './User';
 
 export class OrderModel extends BaseModel {
     @Type(() => GoodsModel)
