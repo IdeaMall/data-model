@@ -1,14 +1,12 @@
-import { IsDate, IsInt, IsOptional, Min } from 'class-validator';
+import { UserOutput } from './User';
 
-export abstract class BaseModel {
-    @IsInt()
-    @Min(1)
+export interface BaseModel {
     id: number;
-
-    @IsDate()
     createdAt: Date;
-
-    @IsDate()
-    @IsOptional()
     updatedAt?: Date;
+}
+
+export interface UserBaseModel extends BaseModel {
+    createdBy: UserOutput;
+    updatedBy?: UserOutput;
 }

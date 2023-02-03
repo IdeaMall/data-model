@@ -1,12 +1,14 @@
-import { Type } from 'class-transformer';
 import {
+    IsDate,
     IsEnum,
+    IsInt,
     IsOptional,
     IsPhoneNumber,
     IsString,
     IsUrl,
-    ValidateNested
+    Min
 } from 'class-validator';
+import { NewData } from 'mobx-restful';
 
 import { BaseModel } from './Base';
 
@@ -16,7 +18,7 @@ export enum Gender {
     Other
 }
 
-export class UserModel extends BaseModel {
+export class UserInput {
     @IsPhoneNumber()
     mobilePhone: string;
 
@@ -35,19 +37,35 @@ export class UserModel extends BaseModel {
     @IsString()
     @IsOptional()
     password?: string;
+}
+
+export class UserFilter implements NewData<UserInput> {
+    @IsPhoneNumber()
+    @IsOptional()
+    mobilePhone?: string;
+
+    @IsString()
+    @IsOptional()
+    nickName?: string;
+
+    @IsEnum(Gender)
+    @IsOptional()
+    gender?: Gender;
+}
+
+export class UserOutput extends UserInput implements BaseModel {
+    @IsInt()
+    @Min(1)
+    id: number;
+
+    @IsDate()
+    createdAt: Date;
+
+    @IsDate()
+    @IsOptional()
+    updatedAt?: Date;
 
     @IsString()
     @IsOptional()
     token?: string;
-}
-
-export abstract class UserBaseModel extends BaseModel {
-    @Type(() => UserModel)
-    @ValidateNested()
-    createdBy: UserModel;
-
-    @Type(() => UserModel)
-    @ValidateNested()
-    @IsOptional()
-    updatedBy?: UserModel;
 }
