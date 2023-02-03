@@ -5,6 +5,7 @@ specifiers:
   class-validator: ^0.14.0
   husky: ^8.0.3
   lint-staged: ^13.1.0
+  mobx-restful: ^0.6.0
   open-cli: ^7.1.0
   prettier: ^2.8.3
   reflect-metadata: ^0.1.13
@@ -16,6 +17,7 @@ specifiers:
 dependencies:
   class-transformer: 0.5.1
   class-validator: 0.14.0
+  mobx-restful: 0.6.0_typescript@4.9.5
   reflect-metadata: 0.1.13
   tslib: 2.5.0
 
@@ -50,6 +52,12 @@ packages:
       chalk: 2.4.2
       js-tokens: 4.0.0
     dev: true
+
+  /@swc/helpers/0.4.14:
+    resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
+    dependencies:
+      tslib: 2.5.0
+    dev: false
 
   /@tokenizer/token/0.3.0:
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
@@ -287,6 +295,10 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
+  /element-internals-polyfill/1.2.2:
+    resolution: {integrity: sha512-aCDEjlgutl8UDoCTpEarUEMHEHsFvrOLYpAyPK0emmxn9EePKaS28xt7fwfVmG3sfxYEhidh8IZWoVaO0B/87A==}
+    dev: false
+
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -464,6 +476,10 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
+  /iterable-observer/1.0.0-rc.1:
+    resolution: {integrity: sha512-mIztAg3zss799h7YtoBQr8tH7sj9iGRZInc7be7bBYpA+sE4YzIO9p66cPLtUmMprBvVjWtkR6apHgsd2FSmwg==}
+    dev: false
+
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: true
@@ -480,6 +496,19 @@ packages:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /koajax/0.8.3_typescript@4.9.5:
+    resolution: {integrity: sha512-qVJG2f/ghrkfB5H1LSOVfYg4mAyHo0pT3g997JUYA5DVvafXX7GwCOpWXX9vBVDrN4qxYM2EgRsqHa4gl6K1eA==}
+    peerDependencies:
+      jsdom: ^20.0.0
+    dependencies:
+      '@swc/helpers': 0.4.14
+      iterable-observer: 1.0.0-rc.1
+      regenerator-runtime: 0.13.11
+      web-utility: 3.9.9_typescript@4.9.5
+    transitivePeerDependencies:
+      - typescript
+    dev: false
 
   /libphonenumber-js/1.10.19:
     resolution: {integrity: sha512-MDZ1zLIkfSDZV5xBta3nuvbEOlsnKCPe4z5r3hyup/AXveevkl9A1eSWmLhd2FX4k7pJDe4MrLeQsux0HI/VWg==}
@@ -640,6 +669,22 @@ packages:
       is-plain-obj: 1.1.0
       kind-of: 6.0.3
     dev: true
+
+  /mobx-restful/0.6.0_typescript@4.9.5:
+    resolution: {integrity: sha512-LtA8qDSHPrX/0+5WaKxj+QRWjzSxrvpzvfDcRF8PcX1Z0dzXfRERdNvN7KhBJ3mHYKYp47gZPNjabBzCqzE4YQ==}
+    peerDependencies:
+      mobx: '>=4 <6'
+    dependencies:
+      '@swc/helpers': 0.4.14
+      class-validator: 0.14.0
+      koajax: 0.8.3_typescript@4.9.5
+      reflect-metadata: 0.1.13
+      regenerator-runtime: 0.13.11
+      web-utility: 4.0.0_typescript@4.9.5
+    transitivePeerDependencies:
+      - jsdom
+      - typescript
+    dev: false
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -824,6 +869,10 @@ packages:
 
   /reflect-metadata/0.1.13:
     resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
+    dev: false
+
+  /regenerator-runtime/0.13.11:
+    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
     dev: false
 
   /restore-cursor/3.1.0:
@@ -1081,7 +1130,6 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /unique-string/3.0.0:
     resolution: {integrity: sha512-VGXBUVwxKMBUznyffQweQABPRRW1vHZAbadFZud4pLFAqRGvv/96vafgjWFqzourzr8YonlQiPgH0YCJfawoGQ==}
@@ -1113,6 +1161,28 @@ packages:
   /vscode-textmate/8.0.0:
     resolution: {integrity: sha512-AFbieoL7a5LMqcnOF04ji+rpXadgOXnZsxQr//r83kLPr7biP7am3g9zbaZIaBGwBRWeSvoMD4mgPdX3e4NWBg==}
     dev: true
+
+  /web-utility/3.9.9_typescript@4.9.5:
+    resolution: {integrity: sha512-8XGlyodk2X7lgWHZCkiOYPTCwTlBOddL8eEh1KbKhrR+uxL8+kN/RUXpLS1wDfgkhzJq5FRG6PoNCwWh/81QEQ==}
+    peerDependencies:
+      typescript: ^4.1.0
+    dependencies:
+      '@swc/helpers': 0.4.14
+      element-internals-polyfill: 1.2.2
+      regenerator-runtime: 0.13.11
+      typescript: 4.9.5
+    dev: false
+
+  /web-utility/4.0.0_typescript@4.9.5:
+    resolution: {integrity: sha512-anM4exkNbRHTXidCCkKMPxh2qAUvKQXAFQ8QH4t4sUoBddFo9fFC6i5Ga9C3HAEQviKIPr+3puMEe99YsIYoSg==}
+    peerDependencies:
+      typescript: ^4.1.0
+    dependencies:
+      '@swc/helpers': 0.4.14
+      element-internals-polyfill: 1.2.2
+      regenerator-runtime: 0.13.11
+      typescript: 4.9.5
+    dev: false
 
   /which/2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}

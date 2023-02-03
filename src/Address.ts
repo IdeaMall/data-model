@@ -1,8 +1,17 @@
-import { IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+    IsDate,
+    IsInt,
+    IsOptional,
+    IsString,
+    Min,
+    ValidateNested
+} from 'class-validator';
 
-import { UserBaseModel } from './User';
+import { UserBaseModel } from './Base';
+import { UserOutput } from './User';
 
-export class AddressModel extends UserBaseModel {
+export class AddressInput {
     @IsString()
     country: string;
 
@@ -35,4 +44,26 @@ export class AddressModel extends UserBaseModel {
 
     @IsString()
     consignee: string;
+}
+
+export class AddressOutput extends AddressInput implements UserBaseModel {
+    @IsInt()
+    @Min(1)
+    id: number;
+
+    @IsDate()
+    createdAt: Date;
+
+    @IsDate()
+    @IsOptional()
+    updatedAt?: Date;
+
+    @Type(() => UserOutput)
+    @ValidateNested()
+    createdBy: UserOutput;
+
+    @Type(() => UserOutput)
+    @ValidateNested()
+    @IsOptional()
+    updatedBy?: UserOutput;
 }

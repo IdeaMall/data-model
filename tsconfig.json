@@ -6,7 +6,8 @@
         "experimentalDecorators": true,
         "declaration": true,
         "importHelpers": true,
-        "lib": ["ES2022"],
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "skipLibCheck": true,
         "outDir": "dist"
     },
     "include": ["src/**/*"],

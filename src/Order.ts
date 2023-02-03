@@ -1,19 +1,23 @@
 import { Type } from 'class-transformer';
 import {
     IsDate,
+    IsInt,
     IsNumber,
     IsOptional,
     IsString,
+    Min,
     ValidateNested
 } from 'class-validator';
+import { NewData } from 'mobx-restful';
 
-import { GoodsModel } from './Goods';
-import { UserBaseModel, UserModel } from './User';
+import { UserBaseModel } from './Base';
+import { GoodsOutput } from './Goods';
+import { UserOutput } from './User';
 
-export class OrderModel extends UserBaseModel {
-    @Type(() => GoodsModel)
+export class OrderInput {
+    @Type(() => GoodsOutput)
     @ValidateNested()
-    goods: GoodsModel;
+    goods: GoodsOutput;
 
     @IsNumber()
     price: number;
@@ -25,7 +29,35 @@ export class OrderModel extends UserBaseModel {
     @IsDate()
     confirmedAt: Date;
 
-    @Type(() => UserModel)
+    @Type(() => UserOutput)
     @ValidateNested()
-    confirmedBy: UserModel;
+    confirmedBy: UserOutput;
+}
+
+export class OrderFilter implements NewData<OrderInput> {
+    @IsString()
+    @IsOptional()
+    remark?: string;
+}
+
+export class OrderOutput extends OrderInput implements UserBaseModel {
+    @IsInt()
+    @Min(1)
+    id: number;
+
+    @IsDate()
+    createdAt: Date;
+
+    @IsDate()
+    @IsOptional()
+    updatedAt?: Date;
+
+    @Type(() => UserOutput)
+    @ValidateNested()
+    createdBy: UserOutput;
+
+    @Type(() => UserOutput)
+    @ValidateNested()
+    @IsOptional()
+    updatedBy?: UserOutput;
 }

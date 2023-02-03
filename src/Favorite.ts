@@ -1,19 +1,56 @@
 import { Type } from 'class-transformer';
-import { IsEnum, ValidateNested } from 'class-validator';
+import {
+    IsDate,
+    IsEnum,
+    IsInt,
+    IsOptional,
+    Min,
+    ValidateNested
+} from 'class-validator';
+import { NewData } from 'mobx-restful';
 
-import { GoodsModel } from './Goods';
-import { UserBaseModel } from './User';
+import { UserBaseModel } from './Base';
+import { GoodsOutput } from './Goods';
+import { UserOutput } from './User';
 
 export enum FavoriteType {
     Like,
     Cart
 }
 
-export class FavoriteModel extends UserBaseModel {
+export class FavoriteInput {
     @IsEnum(FavoriteType)
     type: FavoriteType;
 
-    @Type(() => GoodsModel)
+    @Type(() => GoodsOutput)
     @ValidateNested()
-    goods: GoodsModel;
+    goods: GoodsOutput;
+}
+
+export class FavoriteFilter implements NewData<FavoriteInput> {
+    @IsEnum(FavoriteType)
+    @IsOptional()
+    type?: FavoriteType;
+}
+
+export class FavoriteOutput extends FavoriteInput implements UserBaseModel {
+    @IsInt()
+    @Min(1)
+    id: number;
+
+    @IsDate()
+    createdAt: Date;
+
+    @IsDate()
+    @IsOptional()
+    updatedAt?: Date;
+
+    @Type(() => UserOutput)
+    @ValidateNested()
+    createdBy: UserOutput;
+
+    @Type(() => UserOutput)
+    @ValidateNested()
+    @IsOptional()
+    updatedBy?: UserOutput;
 }
