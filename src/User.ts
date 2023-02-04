@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
     IsDate,
     IsEnum,
@@ -6,16 +7,23 @@ import {
     IsPhoneNumber,
     IsString,
     IsUrl,
-    Min
+    Min,
+    ValidateNested
 } from 'class-validator';
 import { NewData } from 'mobx-restful';
 
-import { BaseModel } from './Base';
+import { BaseFilter, BaseModel, ListChunk } from './Base';
 
 export enum Gender {
     Female,
     Male,
     Other
+}
+
+export enum Role {
+    Root,
+    Admin,
+    Client
 }
 
 export class UserInput {
@@ -37,9 +45,13 @@ export class UserInput {
     @IsString()
     @IsOptional()
     password?: string;
+
+    @IsEnum(Role, { each: true })
+    @IsOptional()
+    roles?: Role[];
 }
 
-export class UserFilter implements NewData<UserInput> {
+export class UserFilter extends BaseFilter implements NewData<UserInput> {
     @IsPhoneNumber()
     @IsOptional()
     mobilePhone?: string;
@@ -68,4 +80,14 @@ export class UserOutput extends UserInput implements BaseModel {
     @IsString()
     @IsOptional()
     token?: string;
+}
+
+export class UserListChunk implements ListChunk<UserOutput> {
+    @IsInt()
+    @Min(0)
+    count: number;
+
+    @Type(() => UserOutput)
+    @ValidateNested({ each: true })
+    list: UserOutput[];
 }

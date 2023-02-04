@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { NewData } from 'mobx-restful';
 
-import { UserBaseModel } from './Base';
+import { BaseFilter, ListChunk, UserBaseModel } from './Base';
 import { UserOutput } from './User';
 
 export class CategoryInput {
@@ -22,7 +22,10 @@ export class CategoryInput {
     parentId?: number;
 }
 
-export class CategoryFilter implements NewData<CategoryInput> {
+export class CategoryFilter
+    extends BaseFilter
+    implements NewData<CategoryInput>
+{
     @IsInt()
     @Min(1)
     @IsOptional()
@@ -49,4 +52,14 @@ export class CategoryOutput extends CategoryInput implements UserBaseModel {
     @ValidateNested()
     @IsOptional()
     updatedBy?: UserOutput;
+}
+
+export class CategoryListChunk implements ListChunk<CategoryOutput> {
+    @IsInt()
+    @Min(0)
+    count: number;
+
+    @Type(() => CategoryOutput)
+    @ValidateNested({ each: true })
+    list: CategoryOutput[];
 }
