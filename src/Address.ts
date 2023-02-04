@@ -8,7 +8,7 @@ import {
     ValidateNested
 } from 'class-validator';
 
-import { UserBaseModel } from './Base';
+import { ListChunk, UserBaseModel } from './Base';
 import { UserOutput } from './User';
 
 export class AddressInput {
@@ -66,4 +66,14 @@ export class AddressOutput extends AddressInput implements UserBaseModel {
     @ValidateNested()
     @IsOptional()
     updatedBy?: UserOutput;
+}
+
+export class AddressListChunk implements ListChunk<AddressOutput> {
+    @IsInt()
+    @Min(0)
+    count: number;
+
+    @Type(() => AddressOutput)
+    @ValidateNested({ each: true })
+    list: AddressOutput[];
 }

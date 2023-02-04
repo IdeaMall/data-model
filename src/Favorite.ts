@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { NewData } from 'mobx-restful';
 
-import { UserBaseModel } from './Base';
+import { BaseFilter, ListChunk, UserBaseModel } from './Base';
 import { GoodsOutput } from './Goods';
 import { UserOutput } from './User';
 
@@ -27,7 +27,10 @@ export class FavoriteInput {
     goods: GoodsOutput;
 }
 
-export class FavoriteFilter implements NewData<FavoriteInput> {
+export class FavoriteFilter
+    extends BaseFilter
+    implements NewData<FavoriteInput>
+{
     @IsEnum(FavoriteType)
     @IsOptional()
     type?: FavoriteType;
@@ -53,4 +56,14 @@ export class FavoriteOutput extends FavoriteInput implements UserBaseModel {
     @ValidateNested()
     @IsOptional()
     updatedBy?: UserOutput;
+}
+
+export class FavoriteListChunk implements ListChunk<FavoriteOutput> {
+    @IsInt()
+    @Min(0)
+    count: number;
+
+    @Type(() => FavoriteOutput)
+    @ValidateNested({ each: true })
+    list: FavoriteOutput[];
 }

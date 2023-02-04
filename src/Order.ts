@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { NewData } from 'mobx-restful';
 
-import { UserBaseModel } from './Base';
+import { BaseFilter, ListChunk, UserBaseModel } from './Base';
 import { GoodsOutput } from './Goods';
 import { UserOutput } from './User';
 
@@ -34,7 +34,7 @@ export class OrderInput {
     confirmedBy: UserOutput;
 }
 
-export class OrderFilter implements NewData<OrderInput> {
+export class OrderFilter extends BaseFilter implements NewData<OrderInput> {
     @IsString()
     @IsOptional()
     remark?: string;
@@ -60,4 +60,14 @@ export class OrderOutput extends OrderInput implements UserBaseModel {
     @ValidateNested()
     @IsOptional()
     updatedBy?: UserOutput;
+}
+
+export class OrderListChunk implements ListChunk<OrderOutput> {
+    @IsInt()
+    @Min(0)
+    count: number;
+
+    @Type(() => OrderOutput)
+    @ValidateNested({ each: true })
+    list: OrderOutput[];
 }
