@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
 import {
-    IsDate,
     IsEnum,
     IsInt,
     IsOptional,
@@ -12,7 +11,7 @@ import {
 } from 'class-validator';
 import { NewData } from 'mobx-restful';
 
-import { BaseFilter, BaseModel, ListChunk } from './Base';
+import { BaseFilter, BaseOutput, InputData, ListChunk } from './Base';
 
 export enum Gender {
     Female,
@@ -21,12 +20,37 @@ export enum Gender {
 }
 
 export enum Role {
-    Root,
-    Admin,
+    Administrator,
+    Manager,
     Client
 }
 
-export class UserInput {
+export class UserOutput extends BaseOutput {
+    @IsPhoneNumber()
+    mobilePhone: string;
+
+    @IsString()
+    @IsOptional()
+    nickName?: string;
+
+    @IsEnum(Gender)
+    @IsOptional()
+    gender?: Gender;
+
+    @IsUrl()
+    @IsOptional()
+    avatar?: string;
+
+    @IsEnum(Role, { each: true })
+    @IsOptional()
+    roles?: Role[];
+
+    @IsString()
+    @IsOptional()
+    token?: string;
+}
+
+export class UserInput implements InputData<UserOutput> {
     @IsPhoneNumber()
     mobilePhone: string;
 
@@ -51,7 +75,7 @@ export class UserInput {
     roles?: Role[];
 }
 
-export class UserFilter extends BaseFilter implements NewData<UserInput> {
+export class UserFilter extends BaseFilter implements Partial<UserInput> {
     @IsPhoneNumber()
     @IsOptional()
     mobilePhone?: string;
@@ -65,23 +89,6 @@ export class UserFilter extends BaseFilter implements NewData<UserInput> {
     gender?: Gender;
 }
 
-export class UserOutput extends UserInput implements BaseModel {
-    @IsInt()
-    @Min(1)
-    id: number;
-
-    @IsDate()
-    createdAt: Date;
-
-    @IsDate()
-    @IsOptional()
-    updatedAt?: Date;
-
-    @IsString()
-    @IsOptional()
-    token?: string;
-}
-
 export class UserListChunk implements ListChunk<UserOutput> {
     @IsInt()
     @Min(0)
@@ -91,3 +98,19 @@ export class UserListChunk implements ListChunk<UserOutput> {
     @ValidateNested({ each: true })
     list: UserOutput[];
 }
+
+export abstract class UserBaseOutput extends BaseOutput {
+    @Type(() => UserOutput)
+    @ValidateNested()
+    createdBy: UserOutput;
+
+    @Type(() => UserOutput)
+    @ValidateNested()
+    @IsOptional()
+    updatedBy?: UserOutput;
+}
+
+export type UserInputData<T> = NewData<
+    Omit<T, keyof UserBaseOutput>,
+    UserBaseOutput
+>;

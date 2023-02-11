@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
 import {
-    IsDate,
     IsInt,
     IsNumber,
     IsOptional,
@@ -9,31 +8,61 @@ import {
     Min,
     ValidateNested
 } from 'class-validator';
-import { NewData } from 'mobx-restful';
 
-import { BaseFilter, ListChunk, UserBaseModel } from './Base';
+import { BaseFilter, ListChunk } from './Base';
 import { CategoryOutput } from './Category';
-import { UserOutput } from './User';
+import { GoodsItemOutput } from './GoodsItem';
+import { UserBaseOutput, UserInputData } from './User';
 
-export class GoodsInput {
+export class GoodsOutput extends UserBaseOutput {
     @IsString()
     name: string;
 
     @IsString()
     description: string;
 
-    @IsUrl({}, { each: true })
-    images: string[];
-
-    @IsNumber()
-    price: number;
-
     @Type(() => CategoryOutput)
     @ValidateNested()
     category: CategoryOutput;
+
+    @IsString()
+    @IsOptional()
+    styleName?: string;
+
+    @IsString({ each: true })
+    @IsOptional()
+    styleValues?: string[];
+
+    @Type(() => GoodsItemOutput)
+    @ValidateNested()
+    items: GoodsItemOutput[];
 }
 
-export class GoodsFilter extends BaseFilter implements NewData<GoodsInput> {
+export class GoodsInput implements UserInputData<GoodsOutput> {
+    @IsString()
+    name: string;
+
+    @IsString()
+    description: string;
+
+    @IsNumber()
+    @Min(1)
+    category: number;
+
+    @IsString()
+    @IsOptional()
+    styleName?: string;
+
+    @IsString({ each: true })
+    @IsOptional()
+    styleValues?: string[];
+
+    @IsInt({ each: true })
+    @Min(1)
+    items: number[];
+}
+
+export class GoodsFilter extends BaseFilter implements Partial<GoodsInput> {
     @IsString()
     @IsOptional()
     name?: string;
@@ -46,28 +75,14 @@ export class GoodsFilter extends BaseFilter implements NewData<GoodsInput> {
     @Min(1)
     @IsOptional()
     category?: number;
-}
 
-export class GoodsOutput extends GoodsInput implements UserBaseModel {
-    @IsInt()
-    @Min(1)
-    id: number;
-
-    @IsDate()
-    createdAt: Date;
-
-    @IsDate()
+    @IsString()
     @IsOptional()
-    updatedAt?: Date;
+    styleName?: string;
 
-    @Type(() => UserOutput)
-    @ValidateNested()
-    createdBy: UserOutput;
-
-    @Type(() => UserOutput)
-    @ValidateNested()
+    @IsString({ each: true })
     @IsOptional()
-    updatedBy?: UserOutput;
+    styleValues?: string[];
 }
 
 export class GoodsListChunk implements ListChunk<GoodsOutput> {

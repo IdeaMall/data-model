@@ -1,18 +1,26 @@
 import { Type } from 'class-transformer';
 import {
-    IsDate,
     IsInt,
     IsOptional,
     IsString,
     Min,
     ValidateNested
 } from 'class-validator';
-import { NewData } from 'mobx-restful';
 
-import { BaseFilter, ListChunk, UserBaseModel } from './Base';
-import { UserOutput } from './User';
+import { BaseFilter, ListChunk } from './Base';
+import { UserBaseOutput, UserInputData } from './User';
 
-export class CategoryInput {
+export class CategoryOutput extends UserBaseOutput {
+    @IsString()
+    name: string;
+
+    @IsInt()
+    @Min(1)
+    @IsOptional()
+    parentId?: number;
+}
+
+export class CategoryInput implements UserInputData<CategoryOutput> {
     @IsString()
     name: string;
 
@@ -24,34 +32,12 @@ export class CategoryInput {
 
 export class CategoryFilter
     extends BaseFilter
-    implements NewData<CategoryInput>
+    implements Partial<CategoryInput>
 {
     @IsInt()
     @Min(1)
     @IsOptional()
     parentId?: number;
-}
-
-export class CategoryOutput extends CategoryInput implements UserBaseModel {
-    @IsInt()
-    @Min(1)
-    id: number;
-
-    @IsDate()
-    createdAt: Date;
-
-    @IsDate()
-    @IsOptional()
-    updatedAt?: Date;
-
-    @Type(() => UserOutput)
-    @ValidateNested()
-    createdBy: UserOutput;
-
-    @Type(() => UserOutput)
-    @ValidateNested()
-    @IsOptional()
-    updatedBy?: UserOutput;
 }
 
 export class CategoryListChunk implements ListChunk<CategoryOutput> {
