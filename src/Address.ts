@@ -1,17 +1,18 @@
 import { Type } from 'class-transformer';
 import {
-    IsDate,
     IsInt,
     IsOptional,
+    IsPhoneNumber,
+    IsPostalCode,
     IsString,
     Min,
     ValidateNested
 } from 'class-validator';
 
-import { ListChunk, UserBaseModel } from './Base';
-import { UserOutput } from './User';
+import { ListChunk } from './Base';
+import { UserBaseOutput, UserInputData } from './User';
 
-export class AddressInput {
+export class AddressOutput extends UserBaseOutput {
     @IsString()
     country: string;
 
@@ -42,30 +43,57 @@ export class AddressInput {
     @IsOptional()
     room?: string;
 
+    @IsPostalCode()
+    @IsOptional()
+    zipCode?: string;
+
     @IsString()
     consignee: string;
+
+    @IsPhoneNumber()
+    mobilePhone: string;
 }
 
-export class AddressOutput extends AddressInput implements UserBaseModel {
-    @IsInt()
-    @Min(1)
-    id: number;
+export class AddressInput implements UserInputData<AddressOutput> {
+    @IsString()
+    country: string;
 
-    @IsDate()
-    createdAt: Date;
+    @IsString()
+    province: string;
 
-    @IsDate()
+    @IsString()
+    city: string;
+
+    @IsString()
+    district: string;
+
+    @IsString()
+    road: string;
+
+    @IsString()
     @IsOptional()
-    updatedAt?: Date;
+    number?: string;
 
-    @Type(() => UserOutput)
-    @ValidateNested()
-    createdBy: UserOutput;
+    @IsString()
+    building: string;
 
-    @Type(() => UserOutput)
-    @ValidateNested()
+    @IsString()
     @IsOptional()
-    updatedBy?: UserOutput;
+    floor?: string;
+
+    @IsString()
+    @IsOptional()
+    room?: string;
+
+    @IsPostalCode()
+    @IsOptional()
+    zipCode?: string;
+
+    @IsString()
+    consignee: string;
+
+    @IsPhoneNumber()
+    mobilePhone: string;
 }
 
 export class AddressListChunk implements ListChunk<AddressOutput> {

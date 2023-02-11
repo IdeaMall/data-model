@@ -8,58 +8,86 @@ import {
     Min,
     ValidateNested
 } from 'class-validator';
-import { NewData } from 'mobx-restful';
+import { AddressOutput } from './Address';
 
-import { BaseFilter, ListChunk, UserBaseModel } from './Base';
-import { GoodsOutput } from './Goods';
-import { UserOutput } from './User';
+import { BaseFilter, ListChunk } from './Base';
+import { GoodsItemOutput } from './GoodsItem';
+import { UserBaseOutput, UserInputData, UserOutput } from './User';
 
-export class OrderInput {
-    @Type(() => GoodsOutput)
+export class OrderOutput extends UserBaseOutput {
+    @Type(() => GoodsItemOutput)
     @ValidateNested()
-    goods: GoodsOutput;
+    items: GoodsItemOutput;
 
     @IsNumber()
     price: number;
 
+    @Type(() => AddressOutput)
+    @ValidateNested()
+    address: AddressOutput;
+
     @IsString()
     @IsOptional()
     remark?: string;
 
+    @IsString()
+    payMethod: string;
+
+    @IsString()
+    payCode: string;
+
     @IsDate()
-    confirmedAt: Date;
+    @IsOptional()
+    confirmedAt?: Date;
 
     @Type(() => UserOutput)
     @ValidateNested()
-    confirmedBy: UserOutput;
-}
-
-export class OrderFilter extends BaseFilter implements NewData<OrderInput> {
-    @IsString()
     @IsOptional()
-    remark?: string;
+    confirmedBy?: UserOutput;
 }
 
-export class OrderOutput extends OrderInput implements UserBaseModel {
+export class OrderInput
+    implements UserInputData<Omit<OrderOutput, 'confirmedBy'>>
+{
     @IsInt()
     @Min(1)
-    id: number;
+    items: number;
 
-    @IsDate()
-    createdAt: Date;
+    @IsNumber()
+    price: number;
+
+    @IsInt()
+    @Min(1)
+    address: number;
+
+    @IsString()
+    @IsOptional()
+    remark?: string;
+
+    @IsString()
+    payMethod: string;
+
+    @IsString()
+    payCode: string;
 
     @IsDate()
     @IsOptional()
-    updatedAt?: Date;
+    confirmedAt?: Date;
 
-    @Type(() => UserOutput)
-    @ValidateNested()
-    createdBy: UserOutput;
-
-    @Type(() => UserOutput)
-    @ValidateNested()
+    @IsInt()
+    @Min(1)
     @IsOptional()
-    updatedBy?: UserOutput;
+    confirmedBy?: number;
+}
+
+export class OrderFilter extends BaseFilter implements Partial<OrderInput> {
+    @IsString()
+    @IsOptional()
+    remark?: string;
+
+    @IsString()
+    @IsOptional()
+    payMethod?: string;
 }
 
 export class OrderListChunk implements ListChunk<OrderOutput> {

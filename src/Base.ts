@@ -1,17 +1,20 @@
-import { IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { IsDate, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { NewData } from 'mobx-restful';
 
-import { UserOutput } from './User';
-
-export interface BaseModel {
+export abstract class BaseOutput {
+    @IsInt()
+    @Min(1)
     id: number;
+
+    @IsDate()
     createdAt: Date;
+
+    @IsDate()
+    @IsOptional()
     updatedAt?: Date;
 }
 
-export interface UserBaseModel extends BaseModel {
-    createdBy: UserOutput;
-    updatedBy?: UserOutput;
-}
+export type InputData<T> = NewData<Omit<T, keyof BaseOutput>, BaseOutput>;
 
 export class BaseFilter {
     @IsInt()
@@ -29,7 +32,7 @@ export class BaseFilter {
     keywords?: string;
 }
 
-export interface ListChunk<T extends BaseModel> {
+export interface ListChunk<T extends BaseOutput> {
     count: number;
     list: T[];
 }

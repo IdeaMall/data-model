@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
 import {
-    IsDate,
     IsInt,
     IsNumber,
     IsOptional,
@@ -8,13 +7,12 @@ import {
     Min,
     ValidateNested
 } from 'class-validator';
-import { NewData } from 'mobx-restful';
 
-import { BaseFilter, ListChunk, UserBaseModel } from './Base';
+import { BaseFilter, ListChunk } from './Base';
 import { GoodsOutput } from './Goods';
-import { UserOutput } from './User';
+import { UserBaseOutput, UserInputData } from './User';
 
-export class CommentInput {
+export class CommentOutput extends UserBaseOutput {
     @Type(() => GoodsOutput)
     @ValidateNested()
     goods: GoodsOutput;
@@ -27,7 +25,20 @@ export class CommentInput {
     content?: string;
 }
 
-export class CommentFilter extends BaseFilter implements NewData<CommentInput> {
+export class CommentInput implements UserInputData<CommentOutput> {
+    @IsInt()
+    @Min(1)
+    goods: number;
+
+    @IsNumber()
+    score: number;
+
+    @IsString()
+    @IsOptional()
+    content?: string;
+}
+
+export class CommentFilter extends BaseFilter implements Partial<CommentInput> {
     @IsInt()
     @Min(1)
     @IsOptional()
@@ -40,28 +51,6 @@ export class CommentFilter extends BaseFilter implements NewData<CommentInput> {
     @IsString()
     @IsOptional()
     content?: string;
-}
-
-export class CommentOutput extends CommentInput implements UserBaseModel {
-    @IsInt()
-    @Min(1)
-    id: number;
-
-    @IsDate()
-    createdAt: Date;
-
-    @IsDate()
-    @IsOptional()
-    updatedAt?: Date;
-
-    @Type(() => UserOutput)
-    @ValidateNested()
-    createdBy: UserOutput;
-
-    @Type(() => UserOutput)
-    @ValidateNested()
-    @IsOptional()
-    updatedBy?: UserOutput;
 }
 
 export class CommentListChunk implements ListChunk<CommentOutput> {
