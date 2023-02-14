@@ -12,12 +12,17 @@ import { AddressOutput } from './Address';
 
 import { BaseFilter, ListChunk } from './Base';
 import { GoodsItemOutput } from './GoodsItem';
+import { ParcelOutput } from './Parcel';
 import { UserBaseOutput, UserInputData, UserOutput } from './User';
 
 export class OrderOutput extends UserBaseOutput {
     @Type(() => GoodsItemOutput)
-    @ValidateNested()
-    items: GoodsItemOutput;
+    @ValidateNested({ each: true })
+    items: GoodsItemOutput[];
+
+    @IsInt({ each: true })
+    @Min(1)
+    itemCounts: number[];
 
     @IsNumber()
     price: number;
@@ -36,6 +41,11 @@ export class OrderOutput extends UserBaseOutput {
     @IsString()
     payCode: string;
 
+    @Type(() => ParcelOutput)
+    @ValidateNested({ each: true })
+    @IsOptional()
+    parcels?: ParcelOutput[];
+
     @IsDate()
     @IsOptional()
     confirmedAt?: Date;
@@ -47,11 +57,15 @@ export class OrderOutput extends UserBaseOutput {
 }
 
 export class OrderInput
-    implements UserInputData<Omit<OrderOutput, 'confirmedBy'>>
+    implements UserInputData<Omit<OrderOutput, 'parcels' | 'confirmedBy'>>
 {
-    @IsInt()
+    @IsInt({ each: true })
     @Min(1)
-    items: number;
+    items: number[];
+
+    @IsInt({ each: true })
+    @Min(1)
+    itemCounts: number[];
 
     @IsNumber()
     price: number;
@@ -69,6 +83,10 @@ export class OrderInput
 
     @IsString()
     payCode: string;
+
+    @IsInt({ each: true })
+    @Min(1)
+    parcels?: number[];
 
     @IsDate()
     @IsOptional()

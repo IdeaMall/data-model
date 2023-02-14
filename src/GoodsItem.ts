@@ -1,15 +1,23 @@
+import { Type } from 'class-transformer';
 import {
     IsEAN,
+    IsInt,
     IsNumber,
     IsOptional,
     IsString,
     IsUrl,
-    Min
+    Min,
+    ValidateNested
 } from 'class-validator';
 
+import { GoodsOutput } from './Goods';
 import { UserBaseOutput, UserInputData } from './User';
 
 export class GoodsItemOutput extends UserBaseOutput {
+    @Type(() => GoodsOutput)
+    @ValidateNested()
+    goods: GoodsOutput;
+
     @IsString()
     name: string;
 
@@ -30,9 +38,17 @@ export class GoodsItemOutput extends UserBaseOutput {
     @IsString({ each: true })
     @IsOptional()
     styles?: string[];
+
+    @IsInt()
+    @Min(0)
+    stock: number;
 }
 
 export class GoodsItemInput implements UserInputData<GoodsItemOutput> {
+    @IsInt()
+    @Min(1)
+    goods: number;
+
     @IsString()
     name: string;
 
@@ -53,4 +69,8 @@ export class GoodsItemInput implements UserInputData<GoodsItemOutput> {
     @IsString({ each: true })
     @IsOptional()
     styles?: string[];
+
+    @IsInt()
+    @Min(0)
+    stock: number;
 }

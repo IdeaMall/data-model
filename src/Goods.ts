@@ -4,11 +4,11 @@ import {
     IsNumber,
     IsOptional,
     IsString,
-    IsUrl,
     Min,
     ValidateNested
 } from 'class-validator';
 
+import { AddressOutput } from './Address';
 import { BaseFilter, ListChunk } from './Base';
 import { CategoryOutput } from './Category';
 import { GoodsItemOutput } from './GoodsItem';
@@ -36,6 +36,10 @@ export class GoodsOutput extends UserBaseOutput {
     @Type(() => GoodsItemOutput)
     @ValidateNested()
     items: GoodsItemOutput[];
+
+    @Type(() => AddressOutput)
+    @ValidateNested()
+    store: AddressOutput;
 }
 
 export class GoodsInput implements UserInputData<GoodsOutput> {
@@ -60,6 +64,10 @@ export class GoodsInput implements UserInputData<GoodsOutput> {
     @IsInt({ each: true })
     @Min(1)
     items: number[];
+
+    @IsNumber()
+    @Min(1)
+    store: number;
 }
 
 export class GoodsFilter extends BaseFilter implements Partial<GoodsInput> {
@@ -83,6 +91,11 @@ export class GoodsFilter extends BaseFilter implements Partial<GoodsInput> {
     @IsString({ each: true })
     @IsOptional()
     styleValues?: string[];
+
+    @IsNumber()
+    @Min(1)
+    @IsOptional()
+    store?: number;
 }
 
 export class GoodsListChunk implements ListChunk<GoodsOutput> {

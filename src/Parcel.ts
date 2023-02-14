@@ -14,14 +14,6 @@ export class ParcelOutput extends UserBaseOutput {
     @ValidateNested({ each: true })
     items: GoodsItemOutput[];
 
-    get kilogram() {
-        return this.items.reduce((sum, { kilogram }) => sum + kilogram, 0);
-    }
-
-    get address() {
-        return this.order.address;
-    }
-
     @IsString()
     postCompany: string;
 
