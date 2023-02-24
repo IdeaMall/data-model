@@ -3,6 +3,7 @@ import {
     IsInt,
     IsOptional,
     IsString,
+    IsUrl,
     Min,
     ValidateNested
 } from 'class-validator';
@@ -14,6 +15,10 @@ export class CategoryOutput extends UserBaseOutput {
     @IsString()
     name: string;
 
+    @IsUrl()
+    @IsOptional()
+    image?: string;
+
     @IsInt()
     @Min(1)
     @IsOptional()
@@ -23,6 +28,10 @@ export class CategoryOutput extends UserBaseOutput {
 export class CategoryInput implements UserInputData<CategoryOutput> {
     @IsString()
     name: string;
+
+    @IsUrl()
+    @IsOptional()
+    image?: string;
 
     @IsInt()
     @Min(1)

@@ -7,7 +7,6 @@ import { UserBaseOutput, UserInputData } from './User';
 
 export class ParcelOutput extends UserBaseOutput {
     @Type(() => OrderOutput)
-    @ValidateNested()
     order: OrderOutput;
 
     @Type(() => GoodsItemOutput)

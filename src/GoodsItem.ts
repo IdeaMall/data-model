@@ -10,12 +10,12 @@ import {
     ValidateNested
 } from 'class-validator';
 
+import { BaseFilter, ListChunk } from './Base';
 import { GoodsOutput } from './Goods';
 import { UserBaseOutput, UserInputData } from './User';
 
 export class GoodsItemOutput extends UserBaseOutput {
     @Type(() => GoodsOutput)
-    @ValidateNested()
     goods: GoodsOutput;
 
     @IsString()
@@ -73,4 +73,32 @@ export class GoodsItemInput implements UserInputData<GoodsItemOutput> {
     @IsInt()
     @Min(0)
     stock: number;
+}
+
+export class GoodsItemFilter
+    extends BaseFilter
+    implements Partial<GoodsItemInput>
+{
+    @IsString()
+    @IsOptional()
+    name?: string;
+
+    @IsEAN()
+    @IsOptional()
+    code?: string;
+
+    @IsInt()
+    @Min(0)
+    @IsOptional()
+    stock?: number;
+}
+
+export class GoodsItemListChunk implements ListChunk<GoodsItemOutput> {
+    @IsInt()
+    @Min(0)
+    count: number;
+
+    @Type(() => GoodsItemOutput)
+    @ValidateNested({ each: true })
+    list: GoodsItemOutput[];
 }

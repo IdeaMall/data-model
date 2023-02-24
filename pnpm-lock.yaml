@@ -5,7 +5,7 @@ specifiers:
   class-validator: ^0.14.0
   husky: ^8.0.3
   lint-staged: ^13.1.2
-  mobx-restful: ^0.6.2
+  mobx-restful: ^0.6.3
   open-cli: ^7.1.0
   prettier: ^2.8.4
   reflect-metadata: ^0.1.13
@@ -17,7 +17,7 @@ specifiers:
 dependencies:
   class-transformer: 0.5.1
   class-validator: 0.14.0
-  mobx-restful: 0.6.2_typescript@4.9.5
+  mobx-restful: 0.6.3_typescript@4.9.5
   reflect-metadata: 0.1.13
   tslib: 2.5.0
 
@@ -674,8 +674,8 @@ packages:
       kind-of: 6.0.3
     dev: true
 
-  /mobx-restful/0.6.2_typescript@4.9.5:
-    resolution: {integrity: sha512-90C/2g1sv871wbc3EJB1/1VzjmU903AdnMqaRTvqCL0D2rw2a68UJiirmFF4oygYwesl9XBHFcR0WuvXgR/WJw==}
+  /mobx-restful/0.6.3_typescript@4.9.5:
+    resolution: {integrity: sha512-y40QEXqOgvWM9Isv6lPwA4Wz9U3zmaI4wxXwJ1HX6D8gmfWOy/0Hhj5xkosOe9xh+4IRHYCLO/Po2ZeXH43jWQ==}
     peerDependencies:
       mobx: '>=4 <6'
     dependencies:
