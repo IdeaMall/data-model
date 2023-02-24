@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsDate, IsInt, IsOptional, IsString, Min } from 'class-validator';
 import { NewData } from 'mobx-restful';
 
@@ -17,11 +18,13 @@ export abstract class BaseOutput {
 export type InputData<T> = NewData<Omit<T, keyof BaseOutput>, BaseOutput>;
 
 export class BaseFilter {
+    @Type(() => Number)
     @IsInt()
     @Min(1)
     @IsOptional()
     pageSize?: number = 10;
 
+    @Type(() => Number)
     @IsInt()
     @Min(1)
     @IsOptional()

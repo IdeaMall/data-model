@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import {
+    IsEnum,
     IsInt,
     IsOptional,
     IsPhoneNumber,
@@ -12,7 +13,15 @@ import {
 import { ListChunk } from './Base';
 import { UserBaseOutput, UserInputData } from './User';
 
+export enum AddressOwner {
+    Seller,
+    Buyer
+}
+
 export class AddressOutput extends UserBaseOutput {
+    @IsEnum(AddressOwner)
+    ownership: AddressOwner;
+
     @IsString()
     country: string;
 
@@ -48,13 +57,16 @@ export class AddressOutput extends UserBaseOutput {
     zipCode?: string;
 
     @IsString()
-    consignee: string;
+    signature: string;
 
     @IsPhoneNumber()
     mobilePhone: string;
 }
 
 export class AddressInput implements UserInputData<AddressOutput> {
+    @IsEnum(AddressOwner)
+    ownership: AddressOwner;
+
     @IsString()
     country: string;
 
@@ -90,7 +102,7 @@ export class AddressInput implements UserInputData<AddressOutput> {
     zipCode?: string;
 
     @IsString()
-    consignee: string;
+    signature: string;
 
     @IsPhoneNumber()
     mobilePhone: string;

@@ -1,6 +1,6 @@
 {
     "name": "@ideamall/data-model",
-    "version": "1.0.0-beta.3",
+    "version": "1.0.0-rc.0",
     "license": "LGPL-2.1",
     "author": "shiy2008@gmail.com",
     "description": "IdeaMall data model is based on TypeScript class validator",
@@ -29,7 +29,7 @@
     "dependencies": {
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
-        "mobx-restful": "^0.6.2",
+        "mobx-restful": "^0.6.3",
         "reflect-metadata": "^0.1.13",
         "tslib": "^2.5.0"
     },
