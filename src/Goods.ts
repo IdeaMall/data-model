@@ -14,6 +14,14 @@ import { CategoryOutput } from './Category';
 import { GoodsItemOutput } from './GoodsItem';
 import { UserBaseOutput, UserInputData } from './User';
 
+export class GoodsStyle {
+    @IsString()
+    name: string;
+
+    @IsString({ each: true })
+    values: string[];
+}
+
 export class GoodsOutput extends UserBaseOutput {
     @IsString()
     name: string;
@@ -25,24 +33,22 @@ export class GoodsOutput extends UserBaseOutput {
     @ValidateNested()
     category: CategoryOutput;
 
-    @IsString()
+    @Type(() => GoodsStyle)
+    @ValidateNested({ each: true })
     @IsOptional()
-    styleName?: string;
-
-    @IsString({ each: true })
-    @IsOptional()
-    styleValues?: string[];
+    styles?: GoodsStyle[];
 
     @Type(() => GoodsItemOutput)
     @ValidateNested()
-    items: GoodsItemOutput[];
+    @IsOptional()
+    items?: GoodsItemOutput[];
 
     @Type(() => AddressOutput)
     @ValidateNested()
     store: AddressOutput;
 }
 
-export class GoodsInput implements UserInputData<GoodsOutput> {
+export class GoodsInput implements Omit<UserInputData<GoodsOutput>, 'items'> {
     @IsString()
     name: string;
 
@@ -53,17 +59,15 @@ export class GoodsInput implements UserInputData<GoodsOutput> {
     @Min(1)
     category: number;
 
-    @IsString()
+    @Type(() => GoodsStyle)
+    @ValidateNested({ each: true })
     @IsOptional()
-    styleName?: string;
-
-    @IsString({ each: true })
-    @IsOptional()
-    styleValues?: string[];
+    styles?: GoodsStyle[];
 
     @IsInt({ each: true })
     @Min(1)
-    items: number[];
+    @IsOptional()
+    items?: number[];
 
     @IsNumber()
     @Min(1)
@@ -83,14 +87,6 @@ export class GoodsFilter extends BaseFilter implements Partial<GoodsInput> {
     @Min(1)
     @IsOptional()
     category?: number;
-
-    @IsString()
-    @IsOptional()
-    styleName?: string;
-
-    @IsString({ each: true })
-    @IsOptional()
-    styleValues?: string[];
 
     @IsNumber()
     @Min(1)
