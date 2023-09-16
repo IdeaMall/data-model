@@ -3,6 +3,7 @@ import {
     IsEAN,
     IsInt,
     IsNumber,
+    IsObject,
     IsOptional,
     IsString,
     IsUrl,
@@ -35,9 +36,9 @@ export class GoodsItemOutput extends UserBaseOutput {
     @IsOptional()
     code?: string;
 
-    @IsString({ each: true })
+    @IsObject()
     @IsOptional()
-    styles?: string[];
+    styles?: Record<string, string>;
 
     @IsInt()
     @Min(0)
@@ -66,9 +67,9 @@ export class GoodsItemInput implements UserInputData<GoodsItemOutput> {
     @IsOptional()
     code?: string;
 
-    @IsString({ each: true })
+    @IsObject()
     @IsOptional()
-    styles?: string[];
+    styles?: Record<string, string>;
 
     @IsInt()
     @Min(0)
@@ -86,11 +87,6 @@ export class GoodsItemFilter
     @IsEAN()
     @IsOptional()
     code?: string;
-
-    @IsInt()
-    @Min(0)
-    @IsOptional()
-    stock?: number;
 }
 
 export class GoodsItemListChunk implements ListChunk<GoodsItemOutput> {

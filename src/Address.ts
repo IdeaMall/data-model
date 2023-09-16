@@ -4,7 +4,6 @@ import {
     IsInt,
     IsOptional,
     IsPhoneNumber,
-    IsPostalCode,
     IsString,
     Min,
     ValidateNested
@@ -52,7 +51,7 @@ export class AddressOutput extends UserBaseOutput {
     @IsOptional()
     room?: string;
 
-    @IsPostalCode()
+    @IsString()
     @IsOptional()
     zipCode?: string;
 
@@ -97,7 +96,7 @@ export class AddressInput implements UserInputData<AddressOutput> {
     @IsOptional()
     room?: string;
 
-    @IsPostalCode()
+    @IsString()
     @IsOptional()
     zipCode?: string;
 
